@@ -1,0 +1,99 @@
+# tipos:
+tupla = ("Uno","Dos","Tres","Cuatro") // inmutable
+lista = ["Uno","Dos","Tres","Cuatro"] // mutable
+conjunto = { 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'}
+diccionario = {"juan": 4098, "ana": 4139}
+
+
+# Convert list to array
+import numpy as np
+l = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+a = np.array(l)
+
+
+# input:
+nombre = input('Tell me your name:') # input always return string str()
+numero_entero = int(input('Tell me a integer namber:'))
+numero_real = float(input('Tell me a real number:'))
+print('Name:', nombre, 'Integer:', numero_entero, 'Real:', numero_real)
+
+
+# load: 
+import pandas as pd
+import numpy as np
+gameSales = pd.read_csv('dato.csv')
+
+
+# clases:
+class Rectangulo:
+    def __init__(self,x,y): # constructor
+        self.x = x #internal parámetres (fields, attributes...)
+        self.y = y
+        
+    autor = "anonimo" # Can create parameters out of constructor.
+    descripcion="It's a rectangle"
+    
+    def area(self):
+        return self.x*self.y
+    
+    def perimetro(self, number):
+        return 2*self.x*self.y
+    
+    def descripcion(self,text):
+        self.descripcion=text
+    
+rectangulo1 = Rectangulo(90,35)
+rectangulo2 = Rectangulo(20,11)
+print(rectangulo1.area())
+rectangulo1.descripcion("Toy rectangle")
+print(rectangulo1.descripcion)
+print(rectangulo2.area())
+
+class Polygon:
+    def __init__(self, no_of_sides):
+        self.n = no_of_sides
+        self.sides = [0 for i in range(no_of_sides)]
+
+    def inputSides(self):
+        self.sides = [float(input("Enter side "+str(i+1)+" : ")) for i in range(self.n)]
+
+    def dispSides(self):
+        for i in range(self.n):
+            print("Side",i+1,"is",self.sides[i])
+            
+class Triangle(Polygon):
+    def __init__(self):
+        Polygon.__init__(self,3)
+
+    def findArea(self):
+        a, b, c = self.sides
+        # calculate the semi-perimeter
+        s =(a + b + c) / 2
+        area =(s*(s-a)*(s-b)*(s-c)) ** 0.5
+        print('The area of the triangle is ',area)
+        
+t = Triangle()
+t.inputSides()
+t.dispSides()
+t.findArea()
+
+
+
+
+
+
+
+
+Tareas a realizar
+1 Echad un vistazo a IntroPython con ejemplos del uso de python.
+2 Echad un vistazo a Pandas con ejemplos de uso de esta librería de procesamiento de datos.
+3 Crear un pequeño juego por turnos diseñado por vosotros para dos jugadores, donde uno de ellos tiene un equipo de 3 soldados espaciales y el otro equipo 3 alienígenas. Los tres deben tener diferentes setups con vida, escudo o ataque diferente. Puede ser en Notebook o en un fichero python (.py) a parte.
+
+El ejercicio no es evaluable pero contará si se entrega y está razonablemente bien implementado como puntos adiconales opcionales.
+
+1. hacer csv de los pjs
+2. hacer clase actor
+3. hacer clases hijas
+4. bucle principal
+5. acciones principales
+5. fin de juego
