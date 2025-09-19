@@ -10,7 +10,6 @@ from IPython.display import clear_output
 df = pd.read_csv('actors.csv')
 df.reset_index();
 
-actors = []
 federation = []
 pirates = []
 
@@ -21,11 +20,12 @@ for _, row in df.iterrows():
                   row["DP"],
                   row["AP"])
     
-    actors.append(actor);
     if actor.faction == "Federation":
         federation.append(actor);
     elif actor.faction == "Space Pirates":
         pirates.append(actor);
+
+actors = federation + pirates # importante, según he entendido no es redundante: no duplica memoria y son referencias
 
 # FUNCIONES
 clear = lambda: os.system('cls') # para limpiar la consola
@@ -35,6 +35,12 @@ def gameOver(federation, pirates): # para comprobar condición bucle principal
     pirsAlive = any(actor.hp > 0 for actor in pirates) 
     return fedsAlive <= 0 or pirsAlive <= 0
 
+def cambioTurno(turno, j1):
+    print(j1)
+    if ((turno % (len(actors)/2)) == 0): # asumimos que ambos equipos tienen la misma cantidad de pjs
+        print(f"¡Turno de {'la Federación!' if j1 else 'los Piratas!'}")
+        return not j1;
+    return j1;
 
 
 # INTRO
@@ -63,30 +69,36 @@ for i in range(3, 0, -1):
 print("¡YA!")
 # time.sleep(1);
 
+
 # para debugear...
 # federation[0].hp = 0
 # federation[1].hp = 0
 # federation[2].hp = 0
+# pirates[0].hp = 0
+# pirates[1].hp = 0
+# pirates[2].hp = 0
 
-pirates[0].hp = 0
-pirates[1].hp = 0
-pirates[2].hp = 0
 
+turno = 0;
+j1 = True;
 while (not gameOver(federation, pirates)):
     clear();
-    print("Es el turno de" "\n")
+    actor = actors[turno % len(actors)]
+    j1 = cambioTurno(turno, j1);
+    print("Es el turno de", actor.name ,"\n")
     
     action = input("1. Atacar 2. Defender\nAcción: ");    
     
-    if (action == "1"):
+    if (action == "1"): # atacar
         time.sleep(0.01)
-    elif (action == "2"):
+    elif (action == "2"): # defender
         time.sleep(0.01);
     else:
         print("Acción inválida, inténtalo de nuevo.\n")
         time.sleep(1.5)
         continue
     
+    turno += 1
     time.sleep(0.5);
     
     
