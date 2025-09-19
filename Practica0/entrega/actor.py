@@ -7,4 +7,4 @@ class Actor:
         self.ap = ap;
         
     def __repr__(self):
-        return f"{self.name}(HP={self.hp}, DP={self.dp}, AP={self.ap})"
+        return f"{self.name}(Faction={self.faction},HP={self.hp}, DP={self.dp}, AP={self.ap})"
