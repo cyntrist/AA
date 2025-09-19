@@ -93,7 +93,6 @@ El ejercicio no es evaluable pero contará si se entrega y está razonablemente 
 
 1. hacer csv de los pjs
 2. hacer clase actor
-3. hacer clases hijas
-4. bucle principal
-5. acciones principales
+3. bucle principal
+4. acciones principales
 5. fin de juego

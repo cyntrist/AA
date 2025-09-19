@@ -40,13 +40,13 @@ def gameOver(federation, pirates): # para comprobar condición bucle principal
     pirsAlive = any(actor.hp > 0 for actor in pirates) 
     return fedsAlive <= 0 or pirsAlive <= 0
 
-def changeTurn(turno, j1):
+def changeTurn(turno, j1): # para comprobar cuando hay que notificar del cambio de turno de equipo
     if ((turno % (len(actors)/2)) == 0): # asumimos que ambos equipos tienen la misma cantidad de pjs
         print(f"¡Turno de {'la Federación!' if j1 else 'los Piratas!'}")
         return not j1;
     return j1;
 
-def attack(equipo, actor):
+def attack(equipo, actor): # gestión de atacar de un actor a otro
     attacked = False
     while(not attacked):
         clear();
@@ -81,6 +81,7 @@ def attack(equipo, actor):
     
 
 # INTRO
+clear()
 print("¡FEDERACIÓN GALÁCTIVA VS PIRATAS ESPACIALES!\n")    
 print("Soldados de la Federación: ")
 for soldier in federation: 
@@ -89,38 +90,31 @@ print("\n\nPiratas espaciales: ")
 for pirate in pirates: 
     print(pirate.name, " ", end = "")
 print();
-# time.sleep(3);
+for i in range(21):
+    print("." * i, end = '\r')
+    time.sleep(.1)
+time.sleep(0.3);
+
+clear();
+print("¡El combate empieza en...!")
+time.sleep(1);
+for i in range(3, 0, -1):
+    print("¡", i, "!", end='', flush = True)
+    time.sleep(1)
+    print('\r' + ' ' * 30, end = '', flush = True)   
+    print('\r', end = '', flush = True)  
+    
+print("¡ YA !")
+time.sleep(1);
 
 
 
 # BUCLE PRINCIPAL
-clear();
-print("¡El combate empieza en...!")
-# time.sleep(1);
-for i in range(3, 0, -1):
-    print("¡", i, "!", end='', flush = True)
-    # time.sleep(1)
-    print('\r' + ' ' * 30, end = '', flush = True)   
-    print('\r', end = '', flush = True)  
-    
-print("¡YA!")
-# time.sleep(1);
-
-
-# para debugear...
-# federation[0].hp = 0
-# federation[1].hp = 0
-# federation[2].hp = 0
-# pirates[0].hp = 0
-# pirates[1].hp = 0
-# pirates[2].hp = 0
-
-
 turno = 0;
 j1 = True;
 while (not gameOver(federation, pirates)):
     clear();
-    print("TURNO:", turno);
+    # print("TURNO:", turno);
     actor = actors[turno % len(actors)]
     j1 = changeTurn(turno, j1);
     while (actor.hp <= 0):
@@ -128,7 +122,7 @@ while (not gameOver(federation, pirates)):
         actor = actors[turno % len(actors)]
         j1 = changeTurn(turno, j1);
     
-    print("Es el turno de", actor.name)
+    print("Es el turno de", actor.name + ".")
     print("HP: ", actor.hp ," DP: ", actor.dp ," AP: ", actor.ap, "\n")
     action = input("1. Atacar 2. Esperar\nAcción: ");    
     
