@@ -30,7 +30,10 @@ for _, row in df.iterrows():
     elif actor.faction == "Space Pirates":
         pirates.append(actor);
 
-actors = federation + pirates # importante, según he entendido no es redundante: no duplica memoria y son referencias
+actors = [] 
+for f, p in zip(federation, pirates): # asumimos que hay el mismo número de pjs en cada equipo
+    actors.append(f)
+    actors.append(p)
 
 # FUNCIONES
 clear = lambda: os.system('cls') # para limpiar la consola
@@ -40,11 +43,11 @@ def gameOver(federation, pirates): # para comprobar condición bucle principal
     pirsAlive = any(actor.hp > 0 for actor in pirates) 
     return fedsAlive <= 0 or pirsAlive <= 0
 
-def changeTurn(turno, j1): # para comprobar cuando hay que notificar del cambio de turno de equipo
-    if ((turno % (len(actors)/2)) == 0): # asumimos que ambos equipos tienen la misma cantidad de pjs
-        print(f"¡Turno de {'la Federación!' if j1 else 'los Piratas!'}")
-        return not j1;
-    return j1;
+# def changeTurn(turno, j1): # para comprobar cuando hay que notificar del cambio de turno de equipo
+#     if ((turno % (len(actors)/2)) == 0): # asumimos que ambos equipos tienen la misma cantidad de pjs
+#         print(f"¡Turno de {'la Federación!' if j1 else 'los Piratas!'}")
+#         return not j1;
+#     return j1;
 
 def attack(equipo, actor): # gestión de atacar de un actor a otro
     attacked = False
@@ -111,17 +114,14 @@ time.sleep(1);
 
 # BUCLE PRINCIPAL
 turno = 0;
-j1 = True;
 while (not gameOver(federation, pirates)):
     clear();
-    # print("TURNO:", turno);
     actor = actors[turno % len(actors)]
-    j1 = changeTurn(turno, j1);
     while (actor.hp <= 0):
-        turno +=1
+        turno += 1
         actor = actors[turno % len(actors)]
-        j1 = changeTurn(turno, j1);
-    
+        
+    print(f"¡Turno de {'la Federación!' if (turno % 2 == 0) else 'los Piratas!'}")        
     print("Es el turno de", actor.name + ".")
     print("HP: ", actor.hp ," DP: ", actor.dp ," AP: ", actor.ap, "\n")
     action = input("1. Atacar 2. Esperar\nAcción: ");    
